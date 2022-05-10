@@ -20,11 +20,10 @@ class DivarSpiderSpider(scrapy.Spider):
             for district in districts:
                 url = f'https://api.divar.ir/v8/web-search/tehran/buy-apartment?districts={district}'
                 yield scrapy.Request(
-                    url=url, callback=self.parse, meta={'district_id': district})
+                    url=url, callback=self.parse)
 
     def parse(self, response):
         data = json.loads(response.body)
-        district = response.meta.get('district_id')
         next_page = data.get('seo_details').get('next')
         last_post_date = data.get('last_post_date')
         homes = data.get("widget_list")
@@ -32,11 +31,11 @@ class DivarSpiderSpider(scrapy.Spider):
             for home in homes:
                 token = home.get('data').get('token')
                 yield scrapy.Request(
-                    url=f'https://api.divar.ir/v5/posts/{token}', callback=self.parse_post, meta={'district_id': district})
+                    url=f'https://api.divar.ir/v5/posts/{token}', callback=self.parse_post)
             if next_page:
                 url = f"https://api.divar.ir/v8/web-search/{next_page}"
                 yield scrapy.Request(url=url, callback=self.parse)
-
+        
     def parse_post(self, response):
         result = {}
         detail = json.loads(response.body)
