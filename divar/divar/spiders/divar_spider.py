@@ -66,7 +66,7 @@ class DivarSpiderSpider(scrapy.Spider):
         widgets = detail.get('widgets')
         more_info = widgets.get('list_data')
         first_info = more_info[0]
-        item_one = first_info.get('items')
+        item_one = first_info.get('items') # this returns none some times
         result['area'] = item_one[0].get('value')
         result['year'] = item_one[1].get('value')
         result['room'] = item_one[2].get('value')
