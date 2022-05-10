@@ -35,7 +35,7 @@ class DivarSpiderSpider(scrapy.Spider):
             if next_page:
                 url = f"https://api.divar.ir/v8/web-search/{next_page}"
                 yield scrapy.Request(url=url, callback=self.parse)
-        
+
     def parse_post(self, response):
         result = {}
         detail = json.loads(response.body)
