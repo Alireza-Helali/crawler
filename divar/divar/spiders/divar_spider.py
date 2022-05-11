@@ -8,7 +8,7 @@ class DivarSpiderSpider(scrapy.Spider):
 
     @staticmethod
     def time_threshold():
-        return datetime.date.today() - datetime.timedelta(days=5)
+        return datetime.date.today() - datetime.timedelta(days=15)
 
     @staticmethod
     def compare_date(epoch):
